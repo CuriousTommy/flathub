@@ -1,0 +1,42 @@
+app-id: com.developersu.ns-usbloader
+runtime: org.gnome.Platform
+runtime-version: '40'
+sdk: org.gnome.Sdk
+sdk-extensions: 
+  - "org.freedesktop.Sdk.Extension.openjdk"
+command: run.sh
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - "/usr/lib/sdk/openjdk/install.sh"
+  - name: ns-usbloader
+    buildsystem: simple
+    build-commands: 
+     - "install -D run.sh /app/bin/run.sh"
+     - "install -D ns-usbloader-5.1.jar /app/bin/ns-usbloader-5.1.jar"
+     - "chmod +x /app/bin/ns-usbloader-5.1.jar"
+    sources:
+     - type: file
+       url: https://github.com/developersu/ns-usbloader/releases/download/v5.1/ns-usbloader-5.1.jar
+       sha256: 117383e48bcc0eaa481c9bfe61d9a78d0ba40295b119a4d2283f212dd81112bf
+     - type: file
+       path: run.sh
+  # TODO: Figure out how to install and use canberra-gtk-module and pk-gtk-module
+  # - name: libcanberra
+  #   buildsystem: autotools
+  #   sources:
+  #    - type: archive
+  #      url: http://deb.debian.org/debian/pool/main/libc/libcanberra/libcanberra_0.30.orig.tar.xz
+  #      sha256: c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72
+  # - name: packagekit-gtk3-module
+  #   buildsystem: autotools
+  #   sources:
+  #     - type: archive
+  #       url: http://deb.debian.org/debian/pool/main/p/packagekit/packagekit_1.1.12.orig.tar.xz
+  #       sha256: 1f4554becf5df0a4d8c51d6757b9401c7ee95bf2dd6f3a73575a8ddd4cd09a01
+finish-args:
+  - "--env=PATH=/app/jre/bin:/usr/bin:/app/bin/"
+  - "--socket=fallback-x11"
+  - "--filesystem=home"
+  - "--socket=pulseaudio"

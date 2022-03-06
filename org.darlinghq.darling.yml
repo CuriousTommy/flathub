@@ -2,14 +2,13 @@ app-id: org.darlinghq.Darling
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
-command: darling shell
+command: /bin/bash
 modules:
-  - name: darling
+  - name: cmake_flatpak_test
     buildsystem: cmake
     builddir: true
     modules:
       - modules/fuse.yml
     sources:
-      - type: git
-        url: https://github.com/darlinghq/darling.git
-        commit: c30e22f13ea61d867d76adc2914ec8352cac66be
+      - type: file
+        path: files/CMakeLists.txt
